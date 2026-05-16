@@ -47,193 +47,275 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script>
-    const SUPABASE_URL = "https://ukuotipwjapezhrettmv.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_QoFMOZhWjyNkFWnJfnazAQ_PZ0GMh4G";
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-    const filters = document.querySelectorAll('.filter');
-    const feed = document.querySelector('.quest-feed');
+<script>
 
-    const quests = [
-      {
-        reward: 25,
-        time: 15,
-        distance: 0.8,
-        weirdness: 7,
-        effort: 2,
-        urgency: 'URGENT',
-        title: "Hype me up before my first date",
-        description: "Need someone to give me a 5-minute confidence speech outside the restaurant.",
-        tags: ["Low effort", "Funny", "High $/hr"]
-      },
-      {
-        reward: 40,
-        time: 45,
-        distance: 2.1,
-        weirdness: 10,
-        effort: 4,
-        urgency: 'TONIGHT',
-        title: "Need fake paparazzi for a birthday entrance",
-        description: "Show up with phones/cameras and act like my friend is famous.",
-        tags: ["Group quest", "Viral", "Weird"]
-      },
-      {
-        reward: 15,
-        time: 10,
-        distance: 0.4,
-        weirdness: 5,
-        effort: 1,
-        urgency: 'WHENEVER',
-        title: "Teach me how to do a cartwheel",
-        description: "Must be patient. I am extremely unathletic.",
-        tags: ["Fast", "Nearby", "Skill"]
-      },
-      {
-        reward: 60,
-        time: 120,
-        distance: 5.5,
-        weirdness: 2,
-        effort: 8,
-        urgency: 'TODAY',
-        title: "Help me move a couch upstairs",
-        description: "One couch. Third floor. I will provide pizza.",
-        tags: ["Physical", "Higher pay", "Useful"]
-      }
-    ];
+  const SUPABASE_URL =
+    "PASTE_YOUR_SUPABASE_URL_HERE";
 
-    function renderQuests(data) {
-      feed.innerHTML = '';
+  const SUPABASE_ANON_KEY =
+    "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
 
-      data.forEach((quest, index) => {
-        const card = document.createElement('article');
+  const supabaseClient =
+    supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
 
-        card.className = `quest-list-card ${index === 0 ? 'top' : ''}`;
+  const filters =
+    document.querySelectorAll('.filter');
 
-        card.innerHTML = `
-          <div class="quest-rank">#${index + 1}</div>
+  const feed =
+    document.querySelector('.quest-feed');
 
-          <div class="quest-info">
-            <div class="quest-meta">
-              <span>$${quest.reward}</span>
-              <span>${quest.time} min</span>
-              <span>${quest.distance} km</span>
-              <span class="urgency-tag">${quest.urgency}</span>
-            </div>
+  let quests = [];
 
-            <h2>${quest.title}</h2>
+  async function fetchQuests() {
 
-            <p>${quest.description}</p>
+    const { data, error } =
+      await supabaseClient
+        .from('quests')
+        .select('*');
 
-            <div class="quest-tags">
-              ${quest.tags.map(tag => `<span>${tag}</span>`).join('')}
-            </div>
-          </div>
+    if (error) {
 
-          <button class="claim-btn" onclick="toggleQuestDetails(this)">
-            View Details
-          </button>
+      console.error(error);
 
-          <div class="inline-details">
-            <h3>What success looks like</h3>
+      return;
 
-            <ul>
-              <li>Show up on time.</li>
-              <li>Complete the quest exactly as described.</li>
-              <li>Confirm completion with the poster.</li>
-            </ul>
-
-            <div class="activity-box mini">
-              <div class="activity-item">
-                👀 ${Math.floor(Math.random() * 8) + 2} people viewed this recently
-              </div>
-
-              <div class="activity-item">
-                📍 ${quest.distance} km away
-              </div>
-
-              <div class="activity-item">
-                ⚡ Urgency: ${quest.urgency}
-              </div>
-            </div>
-
-            <button class="accept-main small">
-              Accept Quest
-            </button>
-          </div>
-        `;
-
-        feed.appendChild(card);
-      });
     }
 
-    function toggleQuestDetails(button) {
-      const card = button.closest('.quest-list-card');
-
-      card.classList.toggle('expanded');
-
-      button.innerText = card.classList.contains('expanded')
-        ? 'Hide Details'
-        : 'View Details';
-    }
+    quests = data;
 
     renderQuests(quests);
 
-    filters.forEach(filter => {
-      filter.addEventListener('click', () => {
-        filters.forEach(btn => btn.classList.remove('active'));
+  }
 
-        filter.classList.add('active');
+  function renderQuests(data) {
 
-        const type = filter.innerText;
+    feed.innerHTML = '';
 
-        let sorted = [...quests];
+    data.forEach((quest, index) => {
 
-        if (type === 'Highest $') {
-          sorted.sort((a, b) => b.reward - a.reward);
-        }
+      const card =
+        document.createElement('article');
 
-        else if (type === 'Fastest') {
-          sorted.sort((a, b) => a.time - b.time);
-        }
+      card.className =
+        `quest-list-card ${index === 0 ? 'top' : ''}`;
 
-        else if (type === 'Closest') {
-          sorted.sort((a, b) => a.distance - b.distance);
-        }
+      card.innerHTML = `
 
-        else if (type === 'Weirdest') {
-          sorted.sort((a, b) => b.weirdness - a.weirdness);
-        }
+        <div class="quest-rank">
+          #${index + 1}
+        </div>
 
-        else if (type === 'Low Effort') {
-          sorted.sort((a, b) => a.effort - b.effort);
-        }
+        <div class="quest-info">
 
-        else {
-          sorted.sort((a, b) =>
-            (
-              (b.reward * 0.35) +
-              (b.weirdness * 0.25) -
-              (b.distance * 0.10) -
-              (b.effort * 0.15)
-            )
-            -
-            (
-              (a.reward * 0.35) +
-              (a.weirdness * 0.25) -
-              (a.distance * 0.10) -
-              (a.effort * 0.15)
-            )
-          );
-        }
+          <div class="quest-meta">
 
-        renderQuests(sorted);
-      });
+            <span>$${quest.reward}</span>
+
+            <span>
+              ${quest.time_minutes} min
+            </span>
+
+            <span>
+              ${quest.distance || 1} km
+            </span>
+
+            <span class="urgency-tag">
+              ${quest.urgency || 'WHENEVER'}
+            </span>
+
+          </div>
+
+          <h2>${quest.title}</h2>
+
+          <p>${quest.description}</p>
+
+          <div class="quest-tags">
+
+            <span>
+              ${quest.category || 'Quest'}
+            </span>
+
+            <span>
+              Weirdness:
+              ${quest.weirdness || 5}/10
+            </span>
+
+          </div>
+
+        </div>
+
+        <button
+          class="claim-btn"
+          onclick="toggleQuestDetails(this)"
+        >
+          View Details
+        </button>
+
+        <div class="inline-details">
+
+          <h3>
+            What success looks like
+          </h3>
+
+          <ul>
+            <li>
+              Complete the quest exactly as described.
+            </li>
+
+            <li>
+              Confirm completion with the poster.
+            </li>
+
+            <li>
+              Show up on time.
+            </li>
+          </ul>
+
+          <div class="activity-box mini">
+
+            <div class="activity-item">
+              👀
+              ${Math.floor(Math.random() * 8) + 2}
+              people viewed this recently
+            </div>
+
+            <div class="activity-item">
+              📍
+              ${quest.location || 'Unknown Location'}
+            </div>
+
+            <div class="activity-item">
+              ⚡
+              Urgency:
+              ${quest.urgency || 'WHENEVER'}
+            </div>
+
+          </div>
+
+          <button class="accept-main small">
+            Accept Quest
+          </button>
+
+        </div>
+
+      `;
+
+      feed.appendChild(card);
+
     });
-  </script>
+
+  }
+
+  function toggleQuestDetails(button) {
+
+    const card =
+      button.closest('.quest-list-card');
+
+    card.classList.toggle('expanded');
+
+    button.innerText =
+      card.classList.contains('expanded')
+      ? 'Hide Details'
+      : 'View Details';
+
+  }
+
+  fetchQuests();
+
+  filters.forEach(filter => {
+
+    filter.addEventListener('click', () => {
+
+      filters.forEach(btn =>
+        btn.classList.remove('active'));
+
+      filter.classList.add('active');
+
+      const type =
+        filter.innerText;
+
+      let sorted =
+        [...quests];
+
+      if (type === 'Highest $') {
+
+        sorted.sort((a, b) =>
+          b.reward - a.reward);
+
+      }
+
+      else if (type === 'Fastest') {
+
+        sorted.sort((a, b) =>
+          a.time_minutes - b.time_minutes);
+
+      }
+
+      else if (type === 'Closest') {
+
+        sorted.sort((a, b) =>
+          (a.distance || 1)
+          -
+          (b.distance || 1));
+
+      }
+
+      else if (type === 'Weirdest') {
+
+        sorted.sort((a, b) =>
+          b.weirdness - a.weirdness);
+
+      }
+
+      else if (type === 'Low Effort') {
+
+        sorted.sort((a, b) =>
+          a.effort - b.effort);
+
+      }
+
+      else {
+
+        sorted.sort((a, b) =>
+
+          (
+            (b.reward * 0.35)
+            +
+            (b.weirdness * 0.25)
+            -
+            ((b.distance || 1) * 0.10)
+            -
+            (b.effort * 0.15)
+          )
+
+          -
+
+          (
+            (a.reward * 0.35)
+            +
+            (a.weirdness * 0.25)
+            -
+            ((a.distance || 1) * 0.10)
+            -
+            (a.effort * 0.15)
+          )
+
+        );
+
+      }
+
+      renderQuests(sorted);
+
+    });
+
+  });
+
+</script>
 
 </body>
 </html>

@@ -4,14 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Post a Quest | SideQuests</title>
+
   <link rel="stylesheet" href="styles.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body class="post-page">
 
   <main class="post-shell">
 
-    <a href="quests.html" class="back-link">← Back to Quests</a>
+    <a href="quests.html" class="back-link">
+      ← Back to Quests
+    </a>
 
     <section class="post-card">
 
@@ -23,45 +28,72 @@
         Make it useful, weird, funny, urgent, or oddly specific.
       </p>
 
-      <form class="quest-form">
+      <form class="quest-form" id="quest-form">
 
         <label>
           Quest Title
-          <input type="text" placeholder="Need fake paparazzi for my birthday entrance">
+
+          <input
+            type="text"
+            id="title"
+            placeholder="Need fake paparazzi for my birthday entrance"
+            required
+          >
         </label>
 
         <label>
           Description
-          <textarea placeholder="Explain what you need, when you need it, and what success looks like."></textarea>
+
+          <textarea
+            id="description"
+            placeholder="Explain what you need, when you need it, and what success looks like."
+            required
+          ></textarea>
         </label>
 
         <div class="form-grid">
+
           <label>
             Reward
-            <input type="number" placeholder="$25">
+
+            <input
+              type="number"
+              id="reward"
+              placeholder="25"
+              required
+            >
           </label>
 
           <label>
             Time Estimate
-            <select>
-              <option>Under 10 min</option>
-              <option>15–30 min</option>
-              <option>30–60 min</option>
-              <option>1–2 hours</option>
-              <option>2+ hours</option>
+
+            <select id="time">
+              <option value="10">Under 10 min</option>
+              <option value="30">15–30 min</option>
+              <option value="60">30–60 min</option>
+              <option value="120">1–2 hours</option>
+              <option value="180">2+ hours</option>
             </select>
           </label>
+
         </div>
 
         <div class="form-grid">
+
           <label>
             Location
-            <input type="text" placeholder="Downtown Hamilton">
+
+            <input
+              type="text"
+              id="location"
+              placeholder="Downtown Hamilton"
+            >
           </label>
 
           <label>
             Category
-            <select>
+
+            <select id="category">
               <option>Funny / Weird</option>
               <option>Errand</option>
               <option>Social</option>
@@ -70,20 +102,46 @@
               <option>Creative</option>
             </select>
           </label>
+
         </div>
 
         <label>
           Weirdness Level
-          <input type="range" min="1" max="10" value="7">
+
+          <input
+            type="range"
+            id="weirdness"
+            min="1"
+            max="10"
+            value="7"
+          >
         </label>
 
         <label>
           Effort Level
-          <input type="range" min="1" max="10" value="3">
+
+          <input
+            type="range"
+            id="effort"
+            min="1"
+            max="10"
+            value="3"
+          >
         </label>
 
-        <button type="button" class="post-btn">
-          Preview Quest
+        <label>
+          Urgency
+
+          <select id="urgency">
+            <option>URGENT</option>
+            <option>TODAY</option>
+            <option>TONIGHT</option>
+            <option>WHENEVER</option>
+          </select>
+        </label>
+
+        <button type="submit" class="post-btn">
+          Post Quest
         </button>
 
       </form>
@@ -91,6 +149,90 @@
     </section>
 
   </main>
+
+  <script>
+
+    const SUPABASE_URL =
+      "PASTE_YOUR_SUPABASE_URL_HERE";
+
+    const SUPABASE_ANON_KEY =
+      "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+
+    const supabaseClient =
+      supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
+
+    const form =
+      document.getElementById('quest-form');
+
+    form.addEventListener('submit', async (e) => {
+
+      e.preventDefault();
+
+      const quest = {
+
+        title:
+          document.getElementById('title').value,
+
+        description:
+          document.getElementById('description').value,
+
+        reward:
+          Number(
+            document.getElementById('reward').value
+          ),
+
+        time_minutes:
+          Number(
+            document.getElementById('time').value
+          ),
+
+        location:
+          document.getElementById('location').value,
+
+        category:
+          document.getElementById('category').value,
+
+        weirdness:
+          Number(
+            document.getElementById('weirdness').value
+          ),
+
+        effort:
+          Number(
+            document.getElementById('effort').value
+          ),
+
+        urgency:
+          document.getElementById('urgency').value,
+
+        distance: 1.0
+
+      };
+
+      const { error } = await supabaseClient
+        .from('quests')
+        .insert([quest]);
+
+      if (error) {
+
+        alert('Error posting quest.');
+
+        console.error(error);
+
+        return;
+
+      }
+
+      alert('Quest posted successfully.');
+
+      window.location.href = 'quests.html';
+
+    });
+
+  </script>
 
 </body>
 </html>
