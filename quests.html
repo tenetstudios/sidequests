@@ -60,6 +60,19 @@
         SUPABASE_ANON_KEY
       );
 
+      async function ensureUser() {
+
+  const {
+    data: { session }
+  } = await supabaseClient.auth.getSession();
+
+  if (session) return;
+
+  await supabaseClient.auth.signInAnonymously();
+}
+
+ensureUser();
+
     const filters =
       document.querySelectorAll('.filter');
 
