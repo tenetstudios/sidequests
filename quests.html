@@ -13,21 +13,21 @@
 
     <header class="quest-header">
 
-  <div class="top-actions">
-    <a href="post.html" class="post-quest-btn">
-      + Post a Quest
-    </a>
-  </div>
+      <div class="top-actions">
+        <a href="post.html" class="post-quest-btn">
+          + Post a Quest
+        </a>
+      </div>
 
-  <a href="index.html" class="back-link">← SideQuests</a>
+      <a href="index.html" class="back-link">← SideQuests</a>
 
-  <h1>Available Quests</h1>
+      <h1>Available Quests</h1>
 
-  <p>
-    Ranked by reward, speed, distance, difficulty, weirdness, and trust.
-  </p>
+      <p>
+        Ranked by reward, speed, distance, difficulty, weirdness, and trust.
+      </p>
 
-</header>
+    </header>
 
     <section class="filters">
       <button class="filter active">Best Match</button>
@@ -45,233 +45,181 @@
       <div><strong>Trust</strong><span>Poster score</span></div>
     </section>
 
-    <section class="quest-feed">
-
-      <article class="quest-list-card top">
-        <div class="quest-rank">#1</div>
-        <div class="quest-info">
-          <div class="quest-meta">
-            <span>$25</span>
-            <span>15 min</span>
-            <span>0.8 km</span>
-          </div>
-          <h2>Hype me up before my first date</h2>
-          <p>Need someone to give me a 5-minute confidence speech outside the restaurant.</p>
-          <div class="quest-tags">
-            <span>Low effort</span>
-            <span>Funny</span>
-            <span>High $/hr</span>
-          </div>
-        </div>
-        <button class="claim-btn">Accept</button>
-      </article>
-
-      <article class="quest-list-card">
-        <div class="quest-rank">#2</div>
-        <div class="quest-info">
-          <div class="quest-meta">
-            <span>$40</span>
-            <span>45 min</span>
-            <span>2.1 km</span>
-          </div>
-          <h2>Need fake paparazzi for a birthday entrance</h2>
-          <p>Show up with phones/cameras and act like my friend is famous.</p>
-          <div class="quest-tags">
-            <span>Group quest</span>
-            <span>Viral</span>
-            <span>Weird</span>
-          </div>
-        </div>
-        <button class="claim-btn">Accept</button>
-      </article>
-
-      <article class="quest-list-card">
-        <div class="quest-rank">#3</div>
-        <div class="quest-info">
-          <div class="quest-meta">
-            <span>$15</span>
-            <span>10 min</span>
-            <span>0.4 km</span>
-          </div>
-          <h2>Teach me how to do a cartwheel</h2>
-          <p>Must be patient. I am extremely unathletic.</p>
-          <div class="quest-tags">
-            <span>Fast</span>
-            <span>Nearby</span>
-            <span>Skill</span>
-          </div>
-        </div>
-        <button class="claim-btn">Accept</button>
-      </article>
-
-      <article class="quest-list-card">
-        <div class="quest-rank">#4</div>
-        <div class="quest-info">
-          <div class="quest-meta">
-            <span>$60</span>
-            <span>2 hr</span>
-            <span>5.5 km</span>
-          </div>
-          <h2>Help me move a couch upstairs</h2>
-          <p>One couch. Third floor. I will provide pizza.</p>
-          <div class="quest-tags">
-            <span>Physical</span>
-            <span>Higher pay</span>
-            <span>Useful</span>
-          </div>
-        </div>
-        <button class="claim-btn">Accept</button>
-      </article>
-
-    </section>
+    <section class="quest-feed"></section>
 
   </main>
 
   <script>
 
-const filters = document.querySelectorAll('.filter');
-const feed = document.querySelector('.quest-feed');
+    const filters = document.querySelectorAll('.filter');
+    const feed = document.querySelector('.quest-feed');
 
-const quests = [
-  {
-    rank: 1,
-    reward: 25,
-    time: 15,
-    distance: 0.8,
-    weirdness: 7,
-    effort: 2,
-    title: "Hype me up before my first date",
-    description: "Need someone to give me a 5-minute confidence speech outside the restaurant.",
-    tags: ["Low effort", "Funny", "High $/hr"]
-  },
+    const quests = [
 
-  {
-    rank: 2,
-    reward: 40,
-    time: 45,
-    distance: 2.1,
-    weirdness: 10,
-    effort: 4,
-    title: "Need fake paparazzi for a birthday entrance",
-    description: "Show up with phones/cameras and act like my friend is famous.",
-    tags: ["Group quest", "Viral", "Weird"]
-  },
+      {
+        reward: 25,
+        time: 15,
+        distance: 0.8,
+        weirdness: 7,
+        effort: 2,
+        title: "Hype me up before my first date",
+        description: "Need someone to give me a 5-minute confidence speech outside the restaurant.",
+        tags: ["Low effort", "Funny", "High $/hr"]
+      },
 
-  {
-    rank: 3,
-    reward: 15,
-    time: 10,
-    distance: 0.4,
-    weirdness: 5,
-    effort: 1,
-    title: "Teach me how to do a cartwheel",
-    description: "Must be patient. I am extremely unathletic.",
-    tags: ["Fast", "Nearby", "Skill"]
-  },
+      {
+        reward: 40,
+        time: 45,
+        distance: 2.1,
+        weirdness: 10,
+        effort: 4,
+        title: "Need fake paparazzi for a birthday entrance",
+        description: "Show up with phones/cameras and act like my friend is famous.",
+        tags: ["Group quest", "Viral", "Weird"]
+      },
 
-  {
-    rank: 4,
-    reward: 60,
-    time: 120,
-    distance: 5.5,
-    weirdness: 2,
-    effort: 8,
-    title: "Help me move a couch upstairs",
-    description: "One couch. Third floor. I will provide pizza.",
-    tags: ["Physical", "Higher pay", "Useful"]
-  }
-];
+      {
+        reward: 15,
+        time: 10,
+        distance: 0.4,
+        weirdness: 5,
+        effort: 1,
+        title: "Teach me how to do a cartwheel",
+        description: "Must be patient. I am extremely unathletic.",
+        tags: ["Fast", "Nearby", "Skill"]
+      },
 
-function renderQuests(data) {
+      {
+        reward: 60,
+        time: 120,
+        distance: 5.5,
+        weirdness: 2,
+        effort: 8,
+        title: "Help me move a couch upstairs",
+        description: "One couch. Third floor. I will provide pizza.",
+        tags: ["Physical", "Higher pay", "Useful"]
+      }
 
-  feed.innerHTML = '';
+    ];
 
-  data.forEach((quest, index) => {
+    function renderQuests(data) {
 
-    const card = document.createElement('article');
+      feed.innerHTML = '';
 
-    card.className =
-      `quest-list-card ${index === 0 ? 'top' : ''}`;
+      data.forEach((quest, index) => {
 
-    card.innerHTML = `
-      <div class="quest-rank">#${index + 1}</div>
+        const card = document.createElement('article');
 
-      <div class="quest-info">
+        card.className =
+          `quest-list-card ${index === 0 ? 'top' : ''}`;
 
-        <div class="quest-meta">
-          <span>$${quest.reward}</span>
-          <span>${quest.time} min</span>
-          <span>${quest.distance} km</span>
-        </div>
+        card.innerHTML = `
 
-        <h2>${quest.title}</h2>
+          <div class="quest-rank">#${index + 1}</div>
 
-        <p>${quest.description}</p>
+          <div class="quest-info">
 
-        <div class="quest-tags">
-          ${quest.tags.map(tag =>
-            `<span>${tag}</span>`).join('')}
-        </div>
+            <div class="quest-meta">
+              <span>$${quest.reward}</span>
+              <span>${quest.time} min</span>
+              <span>${quest.distance} km</span>
+            </div>
 
-      </div>
+            <h2>${quest.title}</h2>
 
-      <button class="claim-btn">Accept</button>
-    `;
+            <p>${quest.description}</p>
 
-    feed.appendChild(card);
+            <div class="quest-tags">
+              ${quest.tags.map(tag =>
+                `<span>${tag}</span>`).join('')}
+            </div>
 
-  });
+          </div>
 
-}
+          <a href="quest-detail.html" class="claim-btn">
+            Accept
+          </a>
 
-renderQuests(quests);
+        `;
 
-filters.forEach(filter => {
+        feed.appendChild(card);
 
-  filter.addEventListener('click', () => {
+      });
 
-    filters.forEach(btn =>
-      btn.classList.remove('active'));
-
-    filter.classList.add('active');
-
-    const type = filter.innerText;
-
-    let sorted = [...quests];
-
-    if (type === 'Highest $') {
-      sorted.sort((a, b) => b.reward - a.reward);
     }
 
-    else if (type === 'Fastest') {
-      sorted.sort((a, b) => a.time - b.time);
-    }
+    renderQuests(quests);
 
-    else if (type === 'Closest') {
-      sorted.sort((a, b) => a.distance - b.distance);
-    }
+    filters.forEach(filter => {
 
-    else if (type === 'Weirdest') {
-      sorted.sort((a, b) => b.weirdness - a.weirdness);
-    }
+      filter.addEventListener('click', () => {
 
-    else if (type === 'Low Effort') {
-      sorted.sort((a, b) => a.effort - b.effort);
-    }
+        filters.forEach(btn =>
+          btn.classList.remove('active'));
 
-    else {
-      sorted.sort((a, b) =>
-        (b.reward / b.time) - (a.reward / a.time)
-      );
-    }
+        filter.classList.add('active');
 
-    renderQuests(sorted);
+        const type = filter.innerText;
 
-  });
+        let sorted = [...quests];
 
-});
+        if (type === 'Highest $') {
+          sorted.sort((a, b) => b.reward - a.reward);
+        }
 
-</script>
+        else if (type === 'Fastest') {
+          sorted.sort((a, b) => a.time - b.time);
+        }
+
+        else if (type === 'Closest') {
+          sorted.sort((a, b) => a.distance - b.distance);
+        }
+
+        else if (type === 'Weirdest') {
+          sorted.sort((a, b) => b.weirdness - a.weirdness);
+        }
+
+        else if (type === 'Low Effort') {
+          sorted.sort((a, b) => a.effort - b.effort);
+        }
+
+        else {
+
+          sorted.sort((a, b) =>
+
+            (
+              (b.reward * 0.35)
+              +
+              (b.weirdness * 0.25)
+              -
+              (b.distance * 0.10)
+              -
+              (b.effort * 0.15)
+            )
+
+            -
+
+            (
+              (a.reward * 0.35)
+              +
+              (a.weirdness * 0.25)
+              -
+              (a.distance * 0.10)
+              -
+              (a.effort * 0.15)
+            )
+
+          );
+
+        }
+
+        renderQuests(sorted);
+
+      });
+
+    });
+
+  </script>
 
 </body>
 </html>
