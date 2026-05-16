@@ -112,3 +112,193 @@ p {
   }
 
 }
+.quests-page {
+  display: block;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(124, 58, 237, 0.22), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(6, 182, 212, 0.18), transparent 35%),
+    #0b0b0f;
+}
+
+.quest-app {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.quest-header {
+  margin-bottom: 28px;
+}
+
+.back-link {
+  color: #a1a1aa;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.quest-header h1 {
+  font-size: 52px;
+  margin: 24px 0 12px;
+}
+
+.quest-header p {
+  max-width: 620px;
+  margin-bottom: 0;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 0 24px;
+}
+
+.filter {
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.filter.active {
+  background: white;
+  color: black;
+}
+
+.rank-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.rank-metrics div {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px;
+  border-radius: 18px;
+}
+
+.rank-metrics strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.rank-metrics span {
+  color: #8b8b95;
+  font-size: 13px;
+}
+
+.quest-feed {
+  display: grid;
+  gap: 14px;
+}
+
+.quest-list-card {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 22px;
+  padding: 18px;
+  transition: 0.2s ease;
+}
+
+.quest-list-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.quest-list-card.top {
+  border-color: rgba(34,197,94,0.45);
+  box-shadow: 0 0 40px rgba(34,197,94,0.08);
+}
+
+.quest-rank {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-weight: 800;
+}
+
+.quest-meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.quest-meta span {
+  color: #22c55e;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.quest-info h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.quest-info p {
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: #a1a1aa;
+}
+
+.quest-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quest-tags span {
+  font-size: 12px;
+  color: #d4d4d8;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 6px 9px;
+  border-radius: 999px;
+}
+
+.claim-btn {
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .quest-header h1 {
+    font-size: 40px;
+  }
+
+  .rank-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quest-list-card {
+    grid-template-columns: 1fr;
+  }
+
+  .quest-rank {
+    width: auto;
+  }
+
+  .claim-btn {
+    width: 100%;
+  }
+}
