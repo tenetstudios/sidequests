@@ -660,3 +660,8 @@ p {
   font-weight: 900;
   cursor: pointer;
 }
+.button {
+  position: relative;
+  z-index: 50;
+  pointer-events: auto;
+}
