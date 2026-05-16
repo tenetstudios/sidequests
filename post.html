@@ -164,6 +164,18 @@
         SUPABASE_ANON_KEY
       );
 
+let userLatitude = null;
+let userLongitude = null;
+
+navigator.geolocation.getCurrentPosition(
+  (position) => {
+    userLatitude = position.coords.latitude;
+    userLongitude = position.coords.longitude;
+  },
+  (error) => {
+    console.log("Location permission denied or unavailable:", error);
+  }
+);
     const form =
       document.getElementById('quest-form');
 
@@ -208,7 +220,8 @@
         urgency:
           document.getElementById('urgency').value,
 
-        distance: 1.0
+        latitude: userLatitude,
+        longitude: userLongitude,
 
       };
 

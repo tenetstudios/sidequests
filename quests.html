@@ -21,7 +21,7 @@
       <h1>Available Quests</h1>
 
       <p>
-        Ranked by rewards, speed, distance, difficulty, weirdness, and trust.
+        Ranked by reward, speed, distance, difficulty, weirdness, and trust.
       </p>
     </header>
 
@@ -47,275 +47,324 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-
-  const SUPABASE_URL =
-    "https://ukuotipwjapezhrettmv.supabase.co";
-
-  const SUPABASE_ANON_KEY =
-    "sb_publishable_QoFMOZhWjyNkFWnJfnazAQ_PZ0GMh4G";
-
-  const supabaseClient =
-    supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
-
-  const filters =
-    document.querySelectorAll('.filter');
-
-  const feed =
-    document.querySelector('.quest-feed');
-
-  let quests = [];
-
-  async function fetchQuests() {
-
-    const { data, error } =
-      await supabaseClient
-        .from('quests')
-        .select('*');
-
-    if (error) {
-
-      console.error(error);
-
-      return;
-
-    }
-
-    quests = data;
-
-    renderQuests(quests);
-
-  }
-
-  function renderQuests(data) {
-
-    feed.innerHTML = '';
-
-    data.forEach((quest, index) => {
-
-      const card =
-        document.createElement('article');
-
-      card.className =
-        `quest-list-card ${index === 0 ? 'top' : ''}`;
-
-      card.innerHTML = `
-
-        <div class="quest-rank">
-          #${index + 1}
-        </div>
-
-        <div class="quest-info">
-
-          <div class="quest-meta">
-
-            <span>$${quest.reward}</span>
-
-            <span>
-              ${quest.time_minutes} min
-            </span>
-
-            <span>
-              ${quest.distance || 1} km
-            </span>
-
-            <span class="urgency-tag">
-              ${quest.urgency || 'WHENEVER'}
-            </span>
-
-          </div>
-
-          <h2>${quest.title}</h2>
-
-          <p>${quest.description}</p>
-
-          <div class="quest-tags">
-
-            <span>
-              ${quest.category || 'Quest'}
-            </span>
-
-            <span>
-              Weirdness:
-              ${quest.weirdness || 5}/10
-            </span>
-
-          </div>
-
-        </div>
-
-        <button
-          class="claim-btn"
-          onclick="toggleQuestDetails(this)"
-        >
-          View Details
-        </button>
-
-        <div class="inline-details">
-
-          <h3>
-            What success looks like
-          </h3>
-
-          <ul>
-            <li>
-              Complete the quest exactly as described.
-            </li>
-
-            <li>
-              Confirm completion with the poster.
-            </li>
-
-            <li>
-              Show up on time.
-            </li>
-          </ul>
-
-          <div class="activity-box mini">
-
-            <div class="activity-item">
-              👀
-              ${Math.floor(Math.random() * 8) + 2}
-              people viewed this recently
-            </div>
-
-            <div class="activity-item">
-              📍
-              ${quest.location || 'Unknown Location'}
-            </div>
-
-            <div class="activity-item">
-              ⚡
-              Urgency:
-              ${quest.urgency || 'WHENEVER'}
-            </div>
-
-          </div>
-
-          <button class="accept-main small">
-            Accept Quest
-          </button>
-
-        </div>
-
-      `;
-
-      feed.appendChild(card);
-
-    });
-
-  }
-
-  function toggleQuestDetails(button) {
-
-    const card =
-      button.closest('.quest-list-card');
-
-    card.classList.toggle('expanded');
-
-    button.innerText =
-      card.classList.contains('expanded')
-      ? 'Hide Details'
-      : 'View Details';
-
-  }
-
-  fetchQuests();
-
-  filters.forEach(filter => {
-
-    filter.addEventListener('click', () => {
-
-      filters.forEach(btn =>
-        btn.classList.remove('active'));
-
-      filter.classList.add('active');
-
-      const type =
-        filter.innerText;
-
-      let sorted =
-        [...quests];
-
-      if (type === 'Highest $') {
-
-        sorted.sort((a, b) =>
-          b.reward - a.reward);
-
-      }
-
-      else if (type === 'Fastest') {
-
-        sorted.sort((a, b) =>
-          a.time_minutes - b.time_minutes);
-
-      }
-
-      else if (type === 'Closest') {
-
-        sorted.sort((a, b) =>
-          (a.distance || 1)
-          -
-          (b.distance || 1));
-
-      }
-
-      else if (type === 'Weirdest') {
-
-        sorted.sort((a, b) =>
-          b.weirdness - a.weirdness);
-
-      }
-
-      else if (type === 'Low Effort') {
-
-        sorted.sort((a, b) =>
-          a.effort - b.effort);
-
-      }
-
-      else {
-
-        sorted.sort((a, b) =>
-
-          (
-            (b.reward * 0.35)
-            +
-            (b.weirdness * 0.25)
-            -
-            ((b.distance || 1) * 0.10)
-            -
-            (b.effort * 0.15)
-          )
-
-          -
-
-          (
-            (a.reward * 0.35)
-            +
-            (a.weirdness * 0.25)
-            -
-            ((a.distance || 1) * 0.10)
-            -
-            (a.effort * 0.15)
-          )
-
+  <script>
+    const SUPABASE_URL =
+      "https://ukuotipwjapezhrettmv.supabase.co";
+
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_QoFMOZhWjyNkFWnJfnazAQ_PZ0GMh4G";
+
+    const supabaseClient =
+      supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
+
+    const filters =
+      document.querySelectorAll('.filter');
+
+    const feed =
+      document.querySelector('.quest-feed');
+
+    let quests = [];
+
+    let viewerLatitude = null;
+    let viewerLongitude = null;
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+
+      const dLat =
+        (lat2 - lat1) * Math.PI / 180;
+
+      const dLon =
+        (lon2 - lon1) * Math.PI / 180;
+
+      const a =
+        Math.sin(dLat / 2) *
+        Math.sin(dLat / 2)
+        +
+        Math.cos(lat1 * Math.PI / 180)
+        *
+        Math.cos(lat2 * Math.PI / 180)
+        *
+        Math.sin(dLon / 2)
+        *
+        Math.sin(dLon / 2);
+
+      const c =
+        2 * Math.atan2(
+          Math.sqrt(a),
+          Math.sqrt(1 - a)
         );
 
+      return R * c;
+    }
+
+    function getQuestDistance(quest) {
+      if (
+        viewerLatitude !== null &&
+        viewerLongitude !== null &&
+        quest.latitude !== null &&
+        quest.longitude !== null
+      ) {
+        return calculateDistance(
+          viewerLatitude,
+          viewerLongitude,
+          Number(quest.latitude),
+          Number(quest.longitude)
+        );
       }
 
-      renderQuests(sorted);
+      return null;
+    }
 
+    function getDistanceText(quest) {
+      const distance =
+        getQuestDistance(quest);
+
+      if (distance === null) {
+        return "Distance unknown";
+      }
+
+      return `${distance.toFixed(1)} km`;
+    }
+
+    async function fetchQuests() {
+      const { data, error } =
+        await supabaseClient
+          .from('quests')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error(error);
+        feed.innerHTML =
+          `<p>Could not load quests.</p>`;
+        return;
+      }
+
+      quests = data || [];
+
+      renderQuests(quests);
+    }
+
+    function renderQuests(data) {
+      feed.innerHTML = '';
+
+      if (!data || data.length === 0) {
+        feed.innerHTML =
+          `<p>No quests posted yet. Be the first.</p>`;
+        return;
+      }
+
+      data.forEach((quest, index) => {
+        const card =
+          document.createElement('article');
+
+        card.className =
+          `quest-list-card ${index === 0 ? 'top' : ''}`;
+
+        card.innerHTML = `
+          <div class="quest-rank">
+            #${index + 1}
+          </div>
+
+          <div class="quest-info">
+
+            <div class="quest-meta">
+              <span>$${quest.reward}</span>
+
+              <span>
+                ${quest.time_minutes} min
+              </span>
+
+              <span>
+                ${getDistanceText(quest)}
+              </span>
+
+              <span class="urgency-tag">
+                ${quest.urgency || 'WHENEVER'}
+              </span>
+            </div>
+
+            <h2>${quest.title}</h2>
+
+            <p>${quest.description}</p>
+
+            <div class="quest-tags">
+              <span>
+                ${quest.category || 'Quest'}
+              </span>
+
+              <span>
+                Weirdness:
+                ${quest.weirdness || 5}/10
+              </span>
+            </div>
+
+          </div>
+
+          <button
+            class="claim-btn"
+            onclick="toggleQuestDetails(this)"
+          >
+            View Details
+          </button>
+
+          <div class="inline-details">
+            <h3>
+              What success looks like
+            </h3>
+
+            <ul>
+              <li>
+                Complete the quest exactly as described.
+              </li>
+
+              <li>
+                Confirm completion with the poster.
+              </li>
+
+              <li>
+                Show up on time.
+              </li>
+            </ul>
+
+            <div class="activity-box mini">
+              <div class="activity-item">
+                👀
+                ${Math.floor(Math.random() * 8) + 2}
+                people viewed this recently
+              </div>
+
+              <div class="activity-item">
+                📍
+                ${quest.location || 'Unknown Location'}
+              </div>
+
+              <div class="activity-item">
+                📏
+                ${getDistanceText(quest)}
+              </div>
+
+              <div class="activity-item">
+                ⚡
+                Urgency:
+                ${quest.urgency || 'WHENEVER'}
+              </div>
+            </div>
+
+            <button class="accept-main small">
+              Accept Quest
+            </button>
+          </div>
+        `;
+
+        feed.appendChild(card);
+      });
+    }
+
+    function toggleQuestDetails(button) {
+      const card =
+        button.closest('.quest-list-card');
+
+      card.classList.toggle('expanded');
+
+      button.innerText =
+        card.classList.contains('expanded')
+          ? 'Hide Details'
+          : 'View Details';
+    }
+
+    function sortByBestMatch(a, b) {
+      const aDistance =
+        getQuestDistance(a) || 5;
+
+      const bDistance =
+        getQuestDistance(b) || 5;
+
+      return (
+        (
+          (b.reward * 0.35) +
+          (b.weirdness * 0.25) -
+          (bDistance * 0.10) -
+          (b.effort * 0.15)
+        )
+        -
+        (
+          (a.reward * 0.35) +
+          (a.weirdness * 0.25) -
+          (aDistance * 0.10) -
+          (a.effort * 0.15)
+        )
+      );
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        viewerLatitude =
+          position.coords.latitude;
+
+        viewerLongitude =
+          position.coords.longitude;
+
+        fetchQuests();
+      },
+      () => {
+        fetchQuests();
+      }
+    );
+
+    filters.forEach(filter => {
+      filter.addEventListener('click', () => {
+        filters.forEach(btn =>
+          btn.classList.remove('active'));
+
+        filter.classList.add('active');
+
+        const type =
+          filter.innerText;
+
+        let sorted =
+          [...quests];
+
+        if (type === 'Highest $') {
+          sorted.sort((a, b) =>
+            b.reward - a.reward);
+        }
+
+        else if (type === 'Fastest') {
+          sorted.sort((a, b) =>
+            a.time_minutes - b.time_minutes);
+        }
+
+        else if (type === 'Closest') {
+          sorted.sort((a, b) =>
+            (getQuestDistance(a) || 999)
+            -
+            (getQuestDistance(b) || 999)
+          );
+        }
+
+        else if (type === 'Weirdest') {
+          sorted.sort((a, b) =>
+            b.weirdness - a.weirdness);
+        }
+
+        else if (type === 'Low Effort') {
+          sorted.sort((a, b) =>
+            a.effort - b.effort);
+        }
+
+        else {
+          sorted.sort(sortByBestMatch);
+        }
+
+        renderQuests(sorted);
+      });
     });
-
-  });
-
-</script>
+  </script>
 
 </body>
 </html>
