@@ -225,26 +225,36 @@ navigator.geolocation.getCurrentPosition(
 
       };
 
-      const { error } = await supabaseClient
-        .from('quests')
-        .insert([quest]);
+      const {
+  data: { user }
+} = await supabaseClient.auth.getUser();
 
-      if (error) {
+if (!user) {
 
-        alert('Error posting quest.');
+  alert('You must be logged in.');
 
-        console.error(error);
+  return;
+}
 
-        return;
+quest.poster_id = user.id;
 
-      }
+const { error } = await supabaseClient
+  .from('quests')
+  .insert([quest]);
 
-      alert('Quest posted successfully.');
+if (error) {
 
-      window.location.href = 'quests.html';
+  alert('Error posting quest.');
 
+  console.error(error);
+
+  return;
+}
+
+alert('Quest posted successfully.');
+
+window.location.href = 'quests.html';
     });
-
   </script>
 
 </body>
