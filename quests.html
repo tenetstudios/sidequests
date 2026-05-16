@@ -12,11 +12,8 @@
   <main class="quest-app">
 
     <header class="quest-header">
-
       <div class="top-actions">
-        <a href="post.html" class="post-quest-btn">
-          + Post a Quest
-        </a>
+        <a href="post.html" class="post-quest-btn">+ Post a Quest</a>
       </div>
 
       <a href="index.html" class="back-link">← SideQuests</a>
@@ -26,7 +23,6 @@
       <p>
         Ranked by reward, speed, distance, difficulty, weirdness, and trust.
       </p>
-
     </header>
 
     <section class="filters">
@@ -50,12 +46,10 @@
   </main>
 
   <script>
-
     const filters = document.querySelectorAll('.filter');
     const feed = document.querySelector('.quest-feed');
 
     const quests = [
-
       {
         reward: 25,
         time: 15,
@@ -67,7 +61,6 @@
         description: "Need someone to give me a 5-minute confidence speech outside the restaurant.",
         tags: ["Low effort", "Funny", "High $/hr"]
       },
-
       {
         reward: 40,
         time: 45,
@@ -79,7 +72,6 @@
         description: "Show up with phones/cameras and act like my friend is famous.",
         tags: ["Group quest", "Viral", "Weird"]
       },
-
       {
         reward: 15,
         time: 10,
@@ -91,7 +83,6 @@
         description: "Must be patient. I am extremely unathletic.",
         tags: ["Fast", "Nearby", "Skill"]
       },
-
       {
         reward: 60,
         time: 120,
@@ -103,66 +94,88 @@
         description: "One couch. Third floor. I will provide pizza.",
         tags: ["Physical", "Higher pay", "Useful"]
       }
-
     ];
 
     function renderQuests(data) {
-
       feed.innerHTML = '';
 
       data.forEach((quest, index) => {
-
         const card = document.createElement('article');
 
-        card.className =
-          `quest-list-card ${index === 0 ? 'top' : ''}`;
+        card.className = `quest-list-card ${index === 0 ? 'top' : ''}`;
 
         card.innerHTML = `
-
           <div class="quest-rank">#${index + 1}</div>
 
           <div class="quest-info">
-
             <div class="quest-meta">
-  <span>$${quest.reward}</span>
-  <span>${quest.time} min</span>
-  <span>${quest.distance} km</span>
-  <span class="urgency-tag">
-    ${quest.urgency}
-  </span>
-</div>
+              <span>$${quest.reward}</span>
+              <span>${quest.time} min</span>
+              <span>${quest.distance} km</span>
+              <span class="urgency-tag">${quest.urgency}</span>
+            </div>
 
             <h2>${quest.title}</h2>
 
             <p>${quest.description}</p>
 
             <div class="quest-tags">
-              ${quest.tags.map(tag =>
-                `<span>${tag}</span>`).join('')}
+              ${quest.tags.map(tag => `<span>${tag}</span>`).join('')}
             </div>
-
           </div>
 
-          <a href="quest-detail.html" class="claim-btn">
-            Accept
-          </a>
+          <button class="claim-btn" onclick="toggleQuestDetails(this)">
+            View Details
+          </button>
 
+          <div class="inline-details">
+            <h3>What success looks like</h3>
+
+            <ul>
+              <li>Show up on time.</li>
+              <li>Complete the quest exactly as described.</li>
+              <li>Confirm completion with the poster.</li>
+            </ul>
+
+            <div class="activity-box mini">
+              <div class="activity-item">
+                👀 ${Math.floor(Math.random() * 8) + 2} people viewed this recently
+              </div>
+
+              <div class="activity-item">
+                📍 ${quest.distance} km away
+              </div>
+
+              <div class="activity-item">
+                ⚡ Urgency: ${quest.urgency}
+              </div>
+            </div>
+
+            <button class="accept-main small">
+              Accept Quest
+            </button>
+          </div>
         `;
 
         feed.appendChild(card);
-
       });
+    }
 
+    function toggleQuestDetails(button) {
+      const card = button.closest('.quest-list-card');
+
+      card.classList.toggle('expanded');
+
+      button.innerText = card.classList.contains('expanded')
+        ? 'Hide Details'
+        : 'View Details';
     }
 
     renderQuests(quests);
 
     filters.forEach(filter => {
-
       filter.addEventListener('click', () => {
-
-        filters.forEach(btn =>
-          btn.classList.remove('active'));
+        filters.forEach(btn => btn.classList.remove('active'));
 
         filter.classList.add('active');
 
@@ -191,41 +204,26 @@
         }
 
         else {
-
           sorted.sort((a, b) =>
-
             (
-              (b.reward * 0.35)
-              +
-              (b.weirdness * 0.25)
-              -
-              (b.distance * 0.10)
-              -
+              (b.reward * 0.35) +
+              (b.weirdness * 0.25) -
+              (b.distance * 0.10) -
               (b.effort * 0.15)
             )
-
             -
-
             (
-              (a.reward * 0.35)
-              +
-              (a.weirdness * 0.25)
-              -
-              (a.distance * 0.10)
-              -
+              (a.reward * 0.35) +
+              (a.weirdness * 0.25) -
+              (a.distance * 0.10) -
               (a.effort * 0.15)
             )
-
           );
-
         }
 
         renderQuests(sorted);
-
       });
-
     });
-
   </script>
 
 </body>
