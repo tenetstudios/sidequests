@@ -419,3 +419,22 @@ p {
     grid-template-columns: 1fr;
   }
 }
+.top-actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.post-quest-btn {
+  background: white;
+  color: black;
+  text-decoration: none;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 800;
+  transition: 0.2s ease;
+}
+
+.post-quest-btn:hover {
+  transform: translateY(-2px);
+}
