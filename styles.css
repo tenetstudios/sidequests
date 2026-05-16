@@ -302,3 +302,120 @@ p {
     width: 100%;
   }
 }
+.post-page {
+  display: block;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(124,58,237,0.25), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(34,197,94,0.15), transparent 30%),
+    #0b0b0f;
+}
+
+.post-shell {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.post-card {
+  margin-top: 28px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 30px;
+  padding: 34px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+}
+
+.post-badge {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(34,197,94,0.12);
+  color: #22c55e;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.post-card h1 {
+  font-size: 52px;
+  margin-bottom: 12px;
+}
+
+.post-subtitle {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.quest-form {
+  display: grid;
+  gap: 18px;
+}
+
+.quest-form label {
+  display: grid;
+  gap: 8px;
+  color: #e4e4e7;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.quest-form input,
+.quest-form textarea,
+.quest-form select {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.28);
+  color: white;
+  border-radius: 16px;
+  padding: 15px 16px;
+  font-size: 15px;
+  outline: none;
+}
+
+.quest-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.quest-form input:focus,
+.quest-form textarea:focus,
+.quest-form select:focus {
+  border-color: rgba(34,197,94,0.55);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.post-btn {
+  margin-top: 8px;
+  border: none;
+  background: white;
+  color: black;
+  border-radius: 18px;
+  padding: 16px 20px;
+  font-weight: 900;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .post-card {
+    padding: 24px;
+    border-radius: 24px;
+  }
+
+  .post-card h1 {
+    font-size: 40px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

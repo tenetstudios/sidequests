@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post a Quest | SideQuests</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="post-page">
+
+  <main class="post-shell">
+
+    <a href="quests.html" class="back-link">← Back to Quests</a>
+
+    <section class="post-card">
+
+      <div class="post-badge">Create Quest</div>
+
+      <h1>Post a side quest.</h1>
+
+      <p class="post-subtitle">
+        Make it useful, weird, funny, urgent, or oddly specific.
+      </p>
+
+      <form class="quest-form">
+
+        <label>
+          Quest Title
+          <input type="text" placeholder="Need fake paparazzi for my birthday entrance">
+        </label>
+
+        <label>
+          Description
+          <textarea placeholder="Explain what you need, when you need it, and what success looks like."></textarea>
+        </label>
+
+        <div class="form-grid">
+          <label>
+            Reward
+            <input type="number" placeholder="$25">
+          </label>
+
+          <label>
+            Time Estimate
+            <select>
+              <option>Under 10 min</option>
+              <option>15–30 min</option>
+              <option>30–60 min</option>
+              <option>1–2 hours</option>
+              <option>2+ hours</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            Location
+            <input type="text" placeholder="Downtown Hamilton">
+          </label>
+
+          <label>
+            Category
+            <select>
+              <option>Funny / Weird</option>
+              <option>Errand</option>
+              <option>Social</option>
+              <option>Fitness</option>
+              <option>Moving / Help</option>
+              <option>Creative</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Weirdness Level
+          <input type="range" min="1" max="10" value="7">
+        </label>
+
+        <label>
+          Effort Level
+          <input type="range" min="1" max="10" value="3">
+        </label>
+
+        <button type="button" class="post-btn">
+          Preview Quest
+        </button>
+
+      </form>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
