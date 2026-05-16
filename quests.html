@@ -62,6 +62,7 @@
         distance: 0.8,
         weirdness: 7,
         effort: 2,
+        urgency: 'URGENT',
         title: "Hype me up before my first date",
         description: "Need someone to give me a 5-minute confidence speech outside the restaurant.",
         tags: ["Low effort", "Funny", "High $/hr"]
@@ -73,6 +74,7 @@
         distance: 2.1,
         weirdness: 10,
         effort: 4,
+        urgency: 'TONIGHT',
         title: "Need fake paparazzi for a birthday entrance",
         description: "Show up with phones/cameras and act like my friend is famous.",
         tags: ["Group quest", "Viral", "Weird"]
@@ -84,6 +86,7 @@
         distance: 0.4,
         weirdness: 5,
         effort: 1,
+        urgency: 'WHENEVER',
         title: "Teach me how to do a cartwheel",
         description: "Must be patient. I am extremely unathletic.",
         tags: ["Fast", "Nearby", "Skill"]
@@ -95,6 +98,7 @@
         distance: 5.5,
         weirdness: 2,
         effort: 8,
+        urgency: 'TODAY',
         title: "Help me move a couch upstairs",
         description: "One couch. Third floor. I will provide pizza.",
         tags: ["Physical", "Higher pay", "Useful"]
@@ -120,10 +124,13 @@
           <div class="quest-info">
 
             <div class="quest-meta">
-              <span>$${quest.reward}</span>
-              <span>${quest.time} min</span>
-              <span>${quest.distance} km</span>
-            </div>
+  <span>$${quest.reward}</span>
+  <span>${quest.time} min</span>
+  <span>${quest.distance} km</span>
+  <span class="urgency-tag">
+    ${quest.urgency}
+  </span>
+</div>
 
             <h2>${quest.title}</h2>
 

@@ -610,3 +610,12 @@ p {
     align-items: flex-start;
   }
 }
+.urgency-tag {
+  background: rgba(239,68,68,0.18);
+  color: #f87171 !important;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px !important;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
