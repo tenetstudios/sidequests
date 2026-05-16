@@ -115,5 +115,151 @@
 
   </main>
 
+  <script>
+
+const filters = document.querySelectorAll('.filter');
+const feed = document.querySelector('.quest-feed');
+
+const quests = [
+  {
+    rank: 1,
+    reward: 25,
+    time: 15,
+    distance: 0.8,
+    weirdness: 7,
+    effort: 2,
+    title: "Hype me up before my first date",
+    description: "Need someone to give me a 5-minute confidence speech outside the restaurant.",
+    tags: ["Low effort", "Funny", "High $/hr"]
+  },
+
+  {
+    rank: 2,
+    reward: 40,
+    time: 45,
+    distance: 2.1,
+    weirdness: 10,
+    effort: 4,
+    title: "Need fake paparazzi for a birthday entrance",
+    description: "Show up with phones/cameras and act like my friend is famous.",
+    tags: ["Group quest", "Viral", "Weird"]
+  },
+
+  {
+    rank: 3,
+    reward: 15,
+    time: 10,
+    distance: 0.4,
+    weirdness: 5,
+    effort: 1,
+    title: "Teach me how to do a cartwheel",
+    description: "Must be patient. I am extremely unathletic.",
+    tags: ["Fast", "Nearby", "Skill"]
+  },
+
+  {
+    rank: 4,
+    reward: 60,
+    time: 120,
+    distance: 5.5,
+    weirdness: 2,
+    effort: 8,
+    title: "Help me move a couch upstairs",
+    description: "One couch. Third floor. I will provide pizza.",
+    tags: ["Physical", "Higher pay", "Useful"]
+  }
+];
+
+function renderQuests(data) {
+
+  feed.innerHTML = '';
+
+  data.forEach((quest, index) => {
+
+    const card = document.createElement('article');
+
+    card.className =
+      `quest-list-card ${index === 0 ? 'top' : ''}`;
+
+    card.innerHTML = `
+      <div class="quest-rank">#${index + 1}</div>
+
+      <div class="quest-info">
+
+        <div class="quest-meta">
+          <span>$${quest.reward}</span>
+          <span>${quest.time} min</span>
+          <span>${quest.distance} km</span>
+        </div>
+
+        <h2>${quest.title}</h2>
+
+        <p>${quest.description}</p>
+
+        <div class="quest-tags">
+          ${quest.tags.map(tag =>
+            `<span>${tag}</span>`).join('')}
+        </div>
+
+      </div>
+
+      <button class="claim-btn">Accept</button>
+    `;
+
+    feed.appendChild(card);
+
+  });
+
+}
+
+renderQuests(quests);
+
+filters.forEach(filter => {
+
+  filter.addEventListener('click', () => {
+
+    filters.forEach(btn =>
+      btn.classList.remove('active'));
+
+    filter.classList.add('active');
+
+    const type = filter.innerText;
+
+    let sorted = [...quests];
+
+    if (type === 'Highest $') {
+      sorted.sort((a, b) => b.reward - a.reward);
+    }
+
+    else if (type === 'Fastest') {
+      sorted.sort((a, b) => a.time - b.time);
+    }
+
+    else if (type === 'Closest') {
+      sorted.sort((a, b) => a.distance - b.distance);
+    }
+
+    else if (type === 'Weirdest') {
+      sorted.sort((a, b) => b.weirdness - a.weirdness);
+    }
+
+    else if (type === 'Low Effort') {
+      sorted.sort((a, b) => a.effort - b.effort);
+    }
+
+    else {
+      sorted.sort((a, b) =>
+        (b.reward / b.time) - (a.reward / a.time)
+      );
+    }
+
+    renderQuests(sorted);
+
+  });
+
+});
+
+</script>
+
 </body>
 </html>
