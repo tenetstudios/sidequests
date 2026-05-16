@@ -255,9 +255,12 @@
               </div>
             </div>
 
-            <button class="accept-main small">
-              Accept Quest
-            </button>
+            <button
+  class="accept-main small"
+  onclick="openQuestChat('${quest.id}', '${quest.user_id}')"
+>
+  Message Poster
+</button>
           </div>
         `;
 
@@ -300,6 +303,197 @@
         )
       );
     }
+
+let currentChatId = null;
+let chatSubscription = null;
+
+async function openQuestChat(questId, posterId) {
+
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  if (!user) {
+    alert("Please log in first.");
+    return;
+  }
+
+  if (user.id === posterId) {
+    alert("You cannot message yourself.");
+    return;
+  }
+
+  const { data: existingChat } =
+    await supabaseClient
+      .from('quest_chats')
+      .select('*')
+      .eq('quest_id', questId)
+      .eq('poster_id', posterId)
+      .eq('quester_id', user.id)
+      .maybeSingle();
+
+  if (existingChat) {
+    currentChatId = existingChat.id;
+  }
+
+  else {
+
+    const { data: newChat, error } =
+      await supabaseClient
+        .from('quest_chats')
+        .insert({
+          quest_id: questId,
+          poster_id: posterId,
+          quester_id: user.id
+        })
+        .select()
+        .single();
+
+    if (error) {
+      console.error(error);
+      alert("Could not create chat.");
+      return;
+    }
+
+    currentChatId = newChat.id;
+  }
+
+  openChatUI();
+
+  loadMessages();
+
+  subscribeToChatMessages();
+}
+
+function openChatUI() {
+
+  let existing =
+    document.getElementById('chat-overlay');
+
+  if (existing) return;
+
+  const chat =
+    document.createElement('div');
+
+  chat.id = 'chat-overlay';
+
+  chat.innerHTML = `
+    <div class="chat-window">
+
+      <div class="chat-header">
+        Quest Chat
+      </div>
+
+      <div id="messages" class="messages"></div>
+
+      <div class="chat-input-row">
+        <input
+          id="chatInput"
+          placeholder="Type a message..."
+        />
+
+        <button onclick="sendMessage()">
+          Send
+        </button>
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(chat);
+}
+
+async function loadMessages() {
+
+  if (!currentChatId) return;
+
+  const { data, error } =
+    await supabaseClient
+      .from('quest_messages')
+      .select('*')
+      .eq('chat_id', currentChatId)
+      .order('created_at', {
+        ascending: true
+      });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const messages =
+    document.getElementById('messages');
+
+  messages.innerHTML =
+    data.map(msg => `
+      <div class="message">
+        ${msg.message}
+      </div>
+    `).join('');
+
+  messages.scrollTop =
+    messages.scrollHeight;
+}
+
+async function sendMessage() {
+
+  const input =
+    document.getElementById('chatInput');
+
+  const message =
+    input.value.trim();
+
+  if (!message) return;
+
+  const {
+    data: { user }
+  } = await supabaseClient.auth.getUser();
+
+  const { error } =
+    await supabaseClient
+      .from('quest_messages')
+      .insert({
+        chat_id: currentChatId,
+        sender_id: user.id,
+        message
+      });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  input.value = '';
+}
+
+function subscribeToChatMessages() {
+
+  if (chatSubscription) {
+    supabaseClient.removeChannel(
+      chatSubscription
+    );
+  }
+
+  chatSubscription =
+    supabaseClient
+      .channel(
+        'chat-' + currentChatId
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'quest_messages',
+          filter:
+            `chat_id=eq.${currentChatId}`
+        },
+        () => {
+          loadMessages();
+        }
+      )
+      .subscribe();
+}
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
