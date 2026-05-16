@@ -270,7 +270,7 @@ ensureUser();
 
             <button
   class="accept-main small"
-  onclick="openQuestChat('${quest.id}', '${quest.user_id}')"
+  onclick="openQuestChat('${quest.id}', '${quest.poster_id || quest.created_by || quest.user_id || ''}')"
 >
   Message Poster
 </button>
@@ -322,12 +322,11 @@ let chatSubscription = null;
 
 async function openQuestChat(questId, posterId) {
 
-  const {
-    data: { user }
-  } = await supabaseClient.auth.getUser();
+  console.log("questId:", questId);
+  console.log("posterId:", posterId);
 
-  if (!user) {
-    alert("Please log in first.");
+  if (!posterId) {
+    alert("This quest does not have a poster ID saved.");
     return;
   }
 
